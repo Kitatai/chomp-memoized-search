@@ -7,7 +7,7 @@
 
 ```bash
 # リポジトリをクローン
-git clone https://github.com/kitatai/chomp-memoized-search.git
+git clone https://github.com/Kitatai/chomp-memoized-search.git
 cd chomp-memoized-search
 
 # ビルド
