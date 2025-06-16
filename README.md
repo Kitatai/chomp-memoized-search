@@ -18,3 +18,9 @@ cmake --build .
 # 実行して結果をファイルへ出力
 ./chomp_enum > results.txt
 ```
+
+## 探索結果
+
+![chomp_winning_moves_color.png](images/chomp_winning_moves_color.png)
+
+先手必勝手が 3 つ以上存在する 20×20 以下の長方形盤面は存在しないことがわかりました。
