@@ -5,9 +5,23 @@
 #include <cstdint>
 #include <string>
 
-static constexpr uint64_t NUM_KEYS = 1ULL << KEY_BITS;
+constexpr uint64_t n_choose_k(uint64_t n, uint64_t k)
+{
+    if (k > n)
+        return 0;
+    if (k > n - k)
+        k = n - k; // 対称性を利用し、計算回数を減らす
+    uint64_t result = 1;
+    for (uint64_t i = 1; i <= k; ++i)
+    {
+        result = result * (n - i + 1) / i;
+    }
+    return result;
+}
+
+static constexpr uint64_t COMBINATION_COUNT = n_choose_k(2 * GRID_SIZE - 1, GRID_SIZE);
 static constexpr uint8_t STATE_BITS = 2;
-static constexpr uint64_t MEMO_BITS = NUM_KEYS * STATE_BITS;
+static constexpr uint64_t MEMO_BITS = COMBINATION_COUNT * STATE_BITS;
 static constexpr uint64_t MEMO_BYTES = (MEMO_BITS + 7) / 8;
 
 extern uint8_t *memo;

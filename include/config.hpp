@@ -3,9 +3,8 @@
 
 #include <cstdint>
 
-static constexpr int N_MAX = 20;
-static constexpr int M_MAX = 20;
-static constexpr uint8_t GRID_SIZE = 20;
-static constexpr uint8_t KEY_BITS = 37;
+static constexpr int N_MAX = 15;
+static constexpr int M_MAX = 15;
+static constexpr uint8_t GRID_SIZE = 15;
 
 #endif // CONFIG_HPP

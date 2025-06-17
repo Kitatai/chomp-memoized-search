@@ -5,6 +5,12 @@
 
 std::pair<bool, bool> early_judgment(RowState &S)
 {
+    if (S.height == 1 && S.width == 1)
+        return {true, false};
+
+    if (S.height == 1 || S.width == 1)
+        return {true, true};
+
     if (S.height == S.width)
         return {true, S.rows[1] > 1};
 
@@ -21,14 +27,11 @@ std::pair<bool, bool> early_judgment(RowState &S)
 
 bool can_win(RowState &S, int n_small, int m_small)
 {
-    if (S.height == 0)
-        return false; // 終局
-
-    uint64_t k = S.key();
     std::pair<bool, bool> judgment_result = early_judgment(S);
     if (judgment_result.first)
         return judgment_result.second;
 
+    uint64_t k = S.key();
     // 自局面メモ参照
     uint8_t st = get_state(k);
     if (st != 0)
