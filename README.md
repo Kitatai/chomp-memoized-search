@@ -1,3 +1,4 @@
+[🇯🇵 日本語](./README.ja.md)
 # Chomp Winning‐Move Enumeration
 
 This program exhaustively lists all winning first moves for 2D Chomp on every rectangular board up to size 20×20. It uses memoized Negamax with α–β pruning and a Ferrers‐diagram–based perfect hash to drive the search.
