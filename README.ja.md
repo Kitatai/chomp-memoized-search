@@ -3,6 +3,8 @@
 2D Chomp の全長方形盤面 (最大 20×20) に対し、初手の先手必勝手を完全列挙するプログラムです。
 メモ化 Negamax + αβ 枝刈り + Ferrers 図形ハッシュで探索します。
 
+[Zeilberger の Chomp 探索結果](https://sites.math.rutgers.edu/~zeilberg/mamarim/mamarimhtml/chompc.html) では 14×14 までの長方形盤面のみが対象ですが、本プログラムはそれを上回る盤面サイズに対応しています。ただし個人の開発によるものであり、正確性は保証できません。誤りを発見された場合はぜひご報告ください。
+
 ## 使い方
 
 ```bash

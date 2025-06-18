@@ -3,6 +3,8 @@
 
 This program exhaustively lists all winning first moves for 2D Chomp on every rectangular board up to size 20×20. It uses memoized Negamax with α–β pruning and a Ferrers‐diagram–based perfect hash to drive the search.
 
+Professor Zeilberger’s Chomp computations at Rutgers (https://sites.math.rutgers.edu/~zeilberg/mamarim/mamarimhtml/chompc.html) cover boards up to 14×14, but this program goes beyond that. Since it is a personal implementation, accuracy cannot be guaranteed. Please report any errors you find.
+
 ## Usage
 
 ```bash
