@@ -7,6 +7,13 @@
 
 int main()
 {
+    std::cout << "Estimated memory usage: " << static_cast<std::size_t>(MEMO_BYTES) / 1024 << " KB" << std::endl;
+    std::cout << "Press Enter to continue..." << std::endl;
+    std::cin.get();
+    std::cout << "Starting computation..." << std::endl;
+    std::cout << "N_SEARCH_MAX: " << N_SEARCH_MAX << ", M_SEARCH_MAX: " << M_SEARCH_MAX << std::endl;
+    std::cout << "N_GRID_SIZE: " << N_GRID_SIZE << ", M_GRID_SIZE: " << M_GRID_SIZE << std::endl;
+
     init_binom();
 
     memo = (uint8_t *)std::aligned_alloc(4096, MEMO_BYTES);

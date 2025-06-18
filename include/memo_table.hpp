@@ -1,6 +1,9 @@
 #ifndef MEMO_TABLE_HPP
 #define MEMO_TABLE_HPP
 
+#define STR1(x) #x
+#define STR2(x) STR1(x)
+
 #include "config.hpp"
 #include <cstdint>
 #include <string>
