@@ -1,31 +1,29 @@
-# Chomp 必勝手列挙
+# Chomp Winning‐Move Enumeration
 
-2D Chomp の全長方形盤面 (最大 20×20) に対し、初手の先手必勝手を完全列挙するプログラムです。
-メモ化 Negamax + αβ 枝刈り + Ferrers 図形ハッシュで探索します。
+This program exhaustively lists all winning first moves for 2D Chomp on every rectangular board up to size 20×20. It uses memoized Negamax with α–β pruning and a Ferrers‐diagram–based perfect hash to drive the search.
 
-## 使い方
+## Usage
 
 ```bash
-# リポジトリをクローン
+# Clone the repository
 git clone https://github.com/Kitatai/chomp-memoized-search.git
 cd chomp-memoized-search
 
-# ビルド
+# Build
 mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 cmake --build .
 
-# 実行して結果をファイルへ出力，最初に使用メモリの見積もりが出るため，実行可能ならEnterで続行
+# Run (will print estimated memory usage first; press Enter to continue)
 ./chomp_enum
 ```
 
-## 注意
-20×20 以下の長方形盤面を探索するためには34GB程度のメモリとストレージが必要です。
+## Note
+Searching all rectangles up to 20×20 requires on the order of 34 GB of main memory and disk space.
+You can reduce both memory and storage requirements (at the cost of maximum solvable size) by lowering the `N_GRID_SIZE` and `M_GRID_SIZE` values in [`include/config.hpp`](include/config.hpp).
 
-[`include/config.hpp`](include/config.hpp) の `N_GRID_SIZE` と `M_GRID_SIZE` を小さくすることで，使用メモリ・ストレージを減らすことができますが，探索可能な盤面のサイズも小さくなります。
-
-## 探索結果
+## Search Results
 
 ![chomp_winning_moves_color.png](images/chomp_winning_moves_color.png)
 
-先手必勝手が 3 つ以上存在する 20×20 以下の長方形盤面は存在しないことがわかりました。
+We found that no rectangular board of size up to 20×20 has more than three winning first moves for the first player.
