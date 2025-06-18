@@ -17,6 +17,6 @@ struct Move
 std::pair<bool, bool> early_judgment(RowState &S);
 
 // Negamax + alpha-beta + memoized search
-bool can_win(RowState &S, int n_small, int m_small);
+bool can_win(RowState &S);
 
 #endif // SEARCH_HPP

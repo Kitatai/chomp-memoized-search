@@ -1,14 +1,17 @@
 #include "ferrers_key.hpp"
 #include <algorithm>
+#include "memo_table.hpp"
+#include "row_state.hpp"
 
-static uint64_t binom[2 * GRID_SIZE][GRID_SIZE + 1];
+static uint64_t binom[N_GRID_SIZE + M_GRID_SIZE + 1][M_GRID_SIZE + 1];
 
 void init_binom()
 {
-    for (int n = 0; n < 2 * GRID_SIZE; ++n)
+    const int size1 = N_GRID_SIZE + M_GRID_SIZE + 1;
+    for (int n = 0; n < size1; ++n)
     {
         binom[n][0] = 1;
-        for (int k = 1; k <= std::min(n, (int)GRID_SIZE); ++k)
+        for (int k = 1; k <= std::min(n, int(M_GRID_SIZE)); ++k)
         {
             if (k == n)
                 binom[n][k] = 1;
@@ -18,15 +21,18 @@ void init_binom()
     }
 }
 
-uint64_t make_key(const uint8_t *rows, uint8_t height)
+uint128_t make_key_sub(const uint8_t *rows, uint8_t height)
 {
-    const int L = 2 * GRID_SIZE - 1;
+    // 定数 L はエンコード盤面の全体長：ENCODING_N_GRID_SIZE + ENCODING_M_GRID_SIZE
+    const int L = N_GRID_SIZE + M_GRID_SIZE;
     int remT = L;
-    int remR = GRID_SIZE;
+    // remR は選択すべきセルの数で、デフォルトはエンコード盤面の高さ
+    int remR = M_GRID_SIZE;
 
-    uint64_t rank = 0;
+    uint128_t rank = 0;
 
-    for (int i = 0; i < (GRID_SIZE - rows[0]); ++i)
+    // 初期状態: 盤面上部の余白分を処理
+    for (int i = 0; i < (M_GRID_SIZE - rows[0]); ++i)
     {
         --remT;
         rank += binom[remT][remR];
@@ -34,6 +40,7 @@ uint64_t make_key(const uint8_t *rows, uint8_t height)
     }
     --remT;
 
+    // 各行で、前の行との差分（右側に切り取られたマス数）を加味する
     for (int r = 1; r < height; ++r)
     {
         int rights = rows[r - 1] - rows[r];
@@ -46,6 +53,7 @@ uint64_t make_key(const uint8_t *rows, uint8_t height)
         --remT;
     }
 
+    // 最終行の処理: 最後の行で残っているマスを処理
     for (int i = 0; i < rows[height - 1]; ++i)
     {
         --remT;
@@ -54,4 +62,12 @@ uint64_t make_key(const uint8_t *rows, uint8_t height)
     }
 
     return rank;
+}
+
+uint128_t make_key(const RowState &S)
+{
+    if (S.bufA.data()[0] > S.bufB.data()[0])
+        return make_key_sub(S.bufA.data(), S.bufB.data()[0]);
+    else
+        return make_key_sub(S.bufB.data(), S.bufA.data()[0]);
 }

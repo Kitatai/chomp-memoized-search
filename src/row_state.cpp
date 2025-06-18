@@ -34,7 +34,7 @@ RowState &RowState::operator=(const RowState &o)
 
 uint64_t RowState::key() const
 {
-    return make_key(rows, height);
+    return make_key(*this);
 }
 
 void apply_move_and_canonicalize(RowState &S, int i, int j)

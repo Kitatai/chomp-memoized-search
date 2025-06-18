@@ -7,7 +7,8 @@
 
 struct RowState
 {
-    std::array<uint8_t, GRID_SIZE + 1> bufA, bufB;
+    std::array<uint8_t, N_GRID_SIZE + 1> bufA;
+    std::array<uint8_t, M_GRID_SIZE + 1> bufB;
     uint8_t *rows;
     uint8_t *cols;
     uint8_t height, width;

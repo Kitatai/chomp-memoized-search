@@ -4,7 +4,6 @@
 #include <vector>
 #include <utility>
 
-std::vector<std::pair<int, int>> solve_internal(int n_small, int m_small);
-std::vector<std::pair<int, int>> solve_wrapper(int n, int m);
+std::vector<std::pair<int, int>> solve(int n_small, int m_small);
 
 #endif // SOLVE_HPP

@@ -6,18 +6,18 @@
 
 uint8_t *memo = nullptr;
 
-uint8_t get_state(uint64_t key)
+uint8_t get_state(uint128_t key)
 {
-    uint64_t bit = key * STATE_BITS;
-    uint64_t idx = bit >> 3; // ÷8 → バイト位置
-    uint8_t off = bit & 7;   // %8 → ビットオフセット
+    uint128_t bit = key * STATE_BITS;
+    uint128_t idx = bit >> 3; // ÷8 → バイト位置
+    uint8_t off = bit & 7;    // %8 → ビットオフセット
     return (memo[idx] >> off) & 0x3;
 }
 
-void set_state(uint64_t key, uint8_t v)
+void set_state(uint128_t key, uint8_t v)
 {
-    uint64_t bit = key * STATE_BITS;
-    uint64_t idx = bit >> 3;
+    uint128_t bit = key * STATE_BITS;
+    uint128_t idx = bit >> 3;
     uint8_t off = bit & 7;
     // 2 ビットだけクリアして新しい値をセット
     memo[idx] &= ~(0x3u << off);
@@ -47,4 +47,9 @@ void save_memo(const std::string &path)
     }
     ofs.write(reinterpret_cast<const char *>(memo), MEMO_BYTES);
     ofs.flush();
+}
+
+std::string memo_filename()
+{
+    return std::string{"memo_"} + std::to_string(N_GRID_SIZE) + "x" + std::to_string(M_GRID_SIZE) + ".bin";
 }

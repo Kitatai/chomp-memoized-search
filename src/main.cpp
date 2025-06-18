@@ -7,20 +7,17 @@
 
 int main()
 {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-
     init_binom();
 
     memo = (uint8_t *)std::aligned_alloc(4096, MEMO_BYTES);
     std::memset(memo, 0, MEMO_BYTES);
-    load_memo("memo.bin");
+    load_memo(memo_filename());
 
-    for (int n = 1; n <= N_MAX; ++n)
+    for (int n = 1; n <= N_SEARCH_MAX; ++n)
     {
-        for (int m = 1; m <= M_MAX; ++m)
+        for (int m = 1; m <= M_SEARCH_MAX; ++m)
         {
-            auto ws = solve_wrapper(n, m);
+            auto ws = solve(n, m);
             std::cout << "n=" << n << ", m=" << m << ": ";
             for (auto &p : ws)
                 std::cout << '(' << p.first << ", " << p.second << ") ";
@@ -28,6 +25,6 @@ int main()
         }
     }
 
-    save_memo("memo.bin");
+    save_memo(memo_filename());
     return 0;
 }

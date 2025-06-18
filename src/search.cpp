@@ -25,13 +25,13 @@ std::pair<bool, bool> early_judgment(RowState &S)
     return {false, true};
 }
 
-bool can_win(RowState &S, int n_small, int m_small)
+bool can_win(RowState &S)
 {
     std::pair<bool, bool> judgment_result = early_judgment(S);
     if (judgment_result.first)
         return judgment_result.second;
 
-    uint64_t k = S.key();
+    uint128_t k = S.key();
     // 自局面メモ参照
     uint8_t st = get_state(k);
     if (st != 0)
@@ -54,7 +54,7 @@ bool can_win(RowState &S, int n_small, int m_small)
             // 子ノードのメモ参照で “1手で証明済み勝ち” を優先
             RowState child = S;
             apply_move_and_canonicalize(child, i, j);
-            uint64_t kc = child.key();
+            uint128_t kc = child.key();
             uint8_t st = get_state(kc);
             if (st == 2)
             {
@@ -77,7 +77,7 @@ bool can_win(RowState &S, int n_small, int m_small)
     // 論理的に勝てる手を探索
     for (auto &mv : cand)
     {
-        if (!can_win(mv.next, n_small, m_small))
+        if (!can_win(mv.next))
         {
             set_state(k, 1);
             return true;
